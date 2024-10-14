@@ -1,0 +1,34 @@
+.radioButton {
+  input[type="radio"] {
+    scale: 1.5;
+    appearance: none;
+    font: inherit;
+    color: currentColor;
+    width: 1em;
+    height: 1em;
+    border: 0.1em solid black;
+    border-radius: 50%;
+    transform: translateY(0.1em);
+    display: grid;
+    place-content: center;
+
+    &:before {
+      content: "";
+      width: 0.65em;
+      height: 0.65em;
+      border-radius: 50%;
+      transform: scale(0);
+      transition: 120ms transform ease-in-out;
+      box-shadow: inset 1em 1em #4a3de5;
+      // border: 0.1em solid #4a3de5;
+    }
+
+    &:checked {
+      border: 0.1em solid #4a3de5;
+
+      &:before {
+        transform: scale(1);
+      }
+    }
+  }
+}
