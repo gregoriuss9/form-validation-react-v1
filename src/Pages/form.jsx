@@ -1,12 +1,19 @@
 import Button from "../components/Button";
+import Checkbox from "../components/Checkbox";
+import Dropdown from "../components/Dropdown";
 import Input from "../components/Input";
 import Label from "../components/Label";
 import RadioButton from "../components/Radio Button";
 const FormPage = () => {
+  const options = [
+    { value: 0, label: "This is not a valid option" },
+    { value: 1, label: "This is the only valid option" },
+    { value: 2, label: "None of the above" },
+  ];
   return (
-    <div className="flex justify-center items-center min-h-screen ">
+    <div className="flex justify-center items-center min-h-screen py-2 px-3">
       <div className="w-full max-w-lg border rounded-xl border-black px-8 py-7">
-        <form action="">
+        <form action="" className="mb-12">
           <Label htmlFor="username">Username</Label>
           <Input type="text" placeholder="Enter email or username" />
           <Label htmlFor="email">Email</Label>
@@ -30,46 +37,26 @@ const FormPage = () => {
               Female
             </RadioButton>
           </div>
-          <label htmlFor="Email" className="block">
-            Write Anything
-          </label>
-          <input
-            type="text"
-            placeholder="Enter your text here"
-            className="border border-black mb-3"
-          />
-          <label htmlFor="option" className="block">
-            Select an option below
-          </label>
-          <select
-            name="option"
-            id="option"
-            placeholder="Select Options"
-            className="border border-black mb-3"
-          >
-            <option value="0">This is not a valid option</option>
-            <option value="1">This is the only valid option</option>
-            <option value="2">None of the above</option>
-          </select>
-          <label htmlFor="date" className="block">
-            Choose a Date
-          </label>
-          <input
+          <Label htmlFor="freeText">Write Anything</Label>
+          <Input type="text" placeholder="Enter your text here" />
+          <Label htmlFor="option">Select an option below</Label>
+          <Dropdown name="option" options={options} />
+          <Label htmlFor="date">Choose a Date</Label>
+          <Input
             type="date"
-            name="date"
-            id="date"
-            className="border border-black mb-3"
+            placeholder="Select date"
+            onBlur={(e) => {
+              console.log(e.target.value);
+              console.log(typeof e.target.value);
+            }}
+            onFocus={(e) => {
+              console.log(e.target.value);
+              console.log(typeof e.target.value);
+            }}
           />
-          <div className="flex gap-x-3 mb-3">
-            <input type="checkbox" className="block" />
-            <label htmlFor="checkbox" className="text-sm">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta
-              debitis voluptatibus cum nesciunt tempore maxime temporibus iste
-              nisi sint perferendis?
-            </label>
-          </div>
+          <Checkbox label="In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content." />
         </form>
-        {/* <button className="border border-red-500 w-full">Submit</button> */}
+
         <Button type="submit" padding="p-2">
           Submit
         </Button>
