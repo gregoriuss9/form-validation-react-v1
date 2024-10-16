@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./RadioButton.module.scss";
+import { DarkMode } from "../../context/DarkMode";
+import darkMode from "../../helpers/darkMode";
 type Propstypes = {
   id: string;
   name: string; // grouper
@@ -8,6 +10,7 @@ type Propstypes = {
 };
 const RadioButton = (props: Propstypes) => {
   const { id, name, value, children } = props;
+  const { isDarkMode } = useContext(DarkMode);
   return (
     <div className={`flex flex-row gap-x-4 ${styles.radioButton}`}>
       <input
@@ -16,8 +19,17 @@ const RadioButton = (props: Propstypes) => {
         name={name}
         value={value}
         className={`${styles.radioButton}`}
+        style={{
+          color: `${darkMode(isDarkMode).secondaryColor}`,
+          border: `1px solid ${darkMode(isDarkMode).secondaryColor}`,
+        }}
       />
-      <label htmlFor={value}>{children}</label>
+      <label
+        htmlFor={value}
+        style={{ color: `${darkMode(isDarkMode).secondaryColor}` }}
+      >
+        {children}
+      </label>
     </div>
   );
 };

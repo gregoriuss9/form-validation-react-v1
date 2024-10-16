@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Button.module.scss";
+import { DarkMode } from "../../context/DarkMode";
+import darkMode from "../../helpers/darkMode";
 type Propstypes = {
   type?: "submit" | "reset" | "button" | undefined;
   onClick?: () => {};
@@ -9,11 +11,13 @@ type Propstypes = {
 };
 const Button = (props: Propstypes) => {
   const { type, onClick, width = "w-full", children, padding = "" } = props;
+  const { isDarkMode } = useContext(DarkMode);
   return (
     <button
       type={type}
       className={`${width} border rounded mb-3 ${padding} ${styles.button}`}
       onClick={onClick}
+      style={{ color: `${darkMode(isDarkMode).mainColor}` }}
     >
       {children}
     </button>
