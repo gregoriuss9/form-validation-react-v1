@@ -11,9 +11,10 @@ type Propstypes = {
   name: string;
   options: Option[];
   label?: string;
+  handleChange?: () => {};
 };
 const Dropdown = (props: Propstypes) => {
-  const { name, options, label } = props;
+  const { name, options, label, handleChange } = props;
   const { isDarkMode } = useContext(DarkMode);
   return (
     <>
@@ -34,18 +35,20 @@ const Dropdown = (props: Propstypes) => {
           borderBottom: `3px solid ${darkMode(isDarkMode).secondaryColor}`,
         }}
         className={`border  rounded mb-3 py-2 px-4 w-full ${styles.select}`}
+        onChange={handleChange}
       >
         {options &&
           options.map((option) => (
             <option
               value={option.value}
               key={option.value}
+              label={option.label}
               style={{
                 backgroundColor: `${darkMode(isDarkMode).mainColor}`,
               }}
-            >
-              {option.label}
-            </option>
+            />
+            //   {option.label}
+            // </option>
           ))}
       </select>
     </>

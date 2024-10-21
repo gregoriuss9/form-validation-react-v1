@@ -7,9 +7,10 @@ type Propstypes = {
   name: string; // grouper
   value: string;
   children: string;
+  onChange?: () => {};
 };
 const RadioButton = (props: Propstypes) => {
-  const { id, name, value, children } = props;
+  const { id, name, value, children, onChange } = props;
   const { isDarkMode } = useContext(DarkMode);
   return (
     <div className={`flex flex-row gap-x-4 ${styles.radioButton}`}>
@@ -18,6 +19,7 @@ const RadioButton = (props: Propstypes) => {
         id={id}
         name={name}
         value={value}
+        onChange={onChange}
         className={`${styles.radioButton}`}
         style={{
           color: `${darkMode(isDarkMode).secondaryColor}`,

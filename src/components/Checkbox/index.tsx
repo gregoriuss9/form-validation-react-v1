@@ -5,15 +5,19 @@ import darkMode from "../../helpers/darkMode";
 
 type Propstypes = {
   label: string;
+  name: string;
+  onClick?: () => {};
 };
 const Checkbox = (props: Propstypes) => {
-  const { label } = props;
+  const { label, name, onClick } = props;
   const { isDarkMode } = useContext(DarkMode);
   return (
     <>
       <div className={`flex gap-x-3 mb-3 ${styles?.checkBox}`}>
         <input
           type="checkbox"
+          name={name}
+          onClick={onClick}
           className={`block ${styles?.checkBox}`}
           style={{
             border: `0.1em solid ${darkMode(isDarkMode).secondaryColor}`,
@@ -21,7 +25,7 @@ const Checkbox = (props: Propstypes) => {
         />
         <label
           htmlFor="checkbox"
-          className="text-sm text-balance"
+          className="text-xs text-balance"
           style={{ color: `${darkMode(isDarkMode).secondaryColor}` }}
         >
           {label}

@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
-import styles from "./Input.module.scss";
+import styles from "./Datepicker.module.scss";
 import { DarkMode } from "../../context/DarkMode";
 import darkMode from "../../helpers/darkMode";
-import alertIcon from "../../assets/Alert.svg";
-import verifiedIcon from "../../assets/Verified.svg";
 type Propstypes = {
   type: string;
   placeholder?: string;
@@ -13,25 +11,40 @@ type Propstypes = {
   label?: string;
   validator?: boolean;
   errorMessages?: string;
-  showIcon?: boolean;
   onChange?: () => {};
+  onFocus: (e: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur: (e: React.FocusEvent<HTMLInputElement>) => void;
 };
 
-const Input = (props: Propstypes) => {
+const Datepicker = (props: Propstypes) => {
   const {
-    type,
+    type = "date",
     placeholder,
     marginBottom = "mb-3",
     width = "w-full",
+    onBlur,
+    onFocus,
     name,
     label,
     errorMessages,
     onChange,
-    validator = true, // for border styling
-    showIcon, //for show the icon after validation
+    validator = true,
   } = props;
   const { isDarkMode } = useContext(DarkMode);
+  const [inputType, setInputType] = useState(type);
+  const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (type === "date") {
+      setInputType("date");
+      if (onFocus) onFocus(e);
+    }
+  };
 
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    if (type === "date") {
+      setInputType("text");
+      if (onBlur) onBlur(e);
+    }
+  };
   return (
     <>
       {label && (
@@ -44,8 +57,10 @@ const Input = (props: Propstypes) => {
       )}
       <div className="relative">
         <input
-          type={type}
+          type={inputType}
           placeholder={placeholder}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           onChange={onChange}
           style={{
             color: `${darkMode(isDarkMode).secondaryColor}`,
@@ -60,16 +75,6 @@ const Input = (props: Propstypes) => {
           id={name}
           className={`border border-black ${marginBottom} ${width} py-2 px-4 rounded ${styles.input}`}
         />
-        {showIcon &&
-          (validator ? (
-            <div className="absolute inset-y-0 flex items-center right-2 bottom-3">
-              <img src={verifiedIcon}></img>
-            </div>
-          ) : (
-            <div className="absolute inset-y-0 flex items-center right-2 bottom-1">
-              <img src={alertIcon} alt="test" />
-            </div>
-          ))}
       </div>
       {errorMessages && (
         <p className="text-xs text-right text-red-500 font-semibold">
@@ -80,4 +85,4 @@ const Input = (props: Propstypes) => {
   );
 };
 
-export default Input;
+export default Datepicker;
